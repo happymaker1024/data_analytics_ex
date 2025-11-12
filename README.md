@@ -11,3 +11,9 @@ pip install numpy
 pip install pandas
 pip install lxml
 ```
+
+# 데이터 시각화 실습
+```
+pip install matplotlib seaborn 
+pip install plotly
+```
