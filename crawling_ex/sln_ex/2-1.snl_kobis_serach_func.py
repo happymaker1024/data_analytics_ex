@@ -8,6 +8,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 import time  
 
+# 파일저장 함수를 정의한 모듈 로딩
+from my_lib import save_lib 
+
+
 # 2. 크롬브라우저 옵션 정의
 options = webdriver.ChromeOptions()             # 옵션 설정 객체 생성
 options.add_argument("window-size=1000,1000")   # 브라우저 크기 설정(가로 x 세로)
@@ -94,32 +98,11 @@ except Exception as e:
 # 파일로 저장하기(csv)
 # 6. 리스트 -> 파일에 저장
 # 현재 날짜/시간 가져오기
-from datetime import datetime
-import os
-import csv
-now = datetime.now()
-timestamp = now.strftime("%Y%m%d%H")   # → 2025111713 형태
 
-# 폴더 / 파일명 설정
-folder = "movie_datas"
-filename = f"movie_{timestamp}.csv"
-# "movie_datas/movie_2025112112.csv"
-filepath = os.path.join(folder, filename)
-
-# 폴더 자동 생성
-os.makedirs(folder, exist_ok=True)
-
-# CSV 저장 (2차원 리스트 여야함.)
-with open(filepath, "w", newline="", encoding="utf-8-sig") as f:
-    writer = csv.writer(f)
-    # 영화제목 | 개봉일 | 예매매출액 | 예매관람수
-    # 1차원 리스트 저장
-    writer.writerow(["영화제목","개봉일", "예매매출액", "예매관람수"])
-    # 2차원 list로 만들어서 저장(수집한 데이터)
-    writer.writerows(movie_lists)
-
-print("CSV 저장 완료:", filepath)
-
+# 호출부
+data_keyword = "movie"
+head = ["영화제목","개봉일", "예매매출액", "예매관람수"]
+save_lib.save_datas(data_keyword, head, movie_lists)
 
 # print("-"*30)
 chrome.close() # tab 모두 종료
